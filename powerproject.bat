@@ -1,7 +1,8 @@
 @echo off
-echo NOTE: pleas be aware, that this programm ony works for up to 9 devices enabled to wake the PC.
-echo To see wich devices are enabled right now open a command prompt and type 'powercfg devicequery wake_armed'
+echo This programm shows you the devices, enabled to wake the PC up.
+echo Please be aware, that this is not developed by profesionals, but in my free time.
 echo.
+echo DISCLAIMER:
 echo I do not take responsibility for any computers being harmed!
 echo Use of the programm on own risk!
 pause
