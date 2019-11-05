@@ -9,8 +9,8 @@ pause
 cls
 setlocal EnableDelayedExpansion
 echo The following devices are able to wake your PC:
-:return
 SET count=1
+:new
 FOR /F "tokens=* USEBACKQ" %%F IN (`powercfg devicequery wake_armed`) DO (
   SET h=%%F
   echo [!count!] !h!
@@ -29,6 +29,7 @@ echo Device to disable: %string%
 set count=1
 
 pause
+:return
 FOR /F "tokens=* USEBACKQ" %%N IN (`powercfg devicequery wake_armed`) DO (
 	set x=%%N
 	goto if
@@ -39,8 +40,9 @@ goto return
 :if
 if "!count!"=="!string!" (
 	powercfg devicedisablewake "!x!"
-	goto back
+	goto new
 )
+goto back
 pause
 :exit
 echo errorlevel: %errorlevel%
