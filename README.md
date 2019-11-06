@@ -4,4 +4,9 @@ This project is aimed, to let me disable certian devices to wake my computer. I 
 
 **Need to be run as admin**
 
-Known issues: Only disables the first item in list. 
+Known issues: Only disables the first item in list.
+
+
+## VBScrip
+
+The VBS file no longer has to be run as admin. While starting the programm the UAC PopUp asks for eluvated rights. If denied Programm closes. 
