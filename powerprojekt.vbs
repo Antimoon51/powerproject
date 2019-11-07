@@ -30,6 +30,7 @@ msgbox Join(test, vbcrlf),0,"WindowName"
 
 Set otexe = oWshShell.Exec("cmd.exe /c del C:\users\public\desktop\temp.txt")
 
+
 '-----------------------------------------
 'Run this script under elevated privileges
 '-----------------------------------------
