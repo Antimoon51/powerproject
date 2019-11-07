@@ -14,7 +14,7 @@ DeviceArray = Split(oExec.StdOut.ReadAll, vbCrLf)
 
 msgbox Join(DeviceArray, vbcrlf)
 
-With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("temp.txt", True)
+With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\users\public\desktop\temp.txt", True)
   .Write Join(DeviceArray, vbCrLf)
   .Close
 End With
@@ -22,21 +22,13 @@ End With
 device=inputbox (Join(DeviceArray, vbcrlf),"Disable")
 msgbox "Disable this device:" &vbcrlf& device,1,"WindowName"
 
-Set objFileToWrite = CreateObject("Scripting.FileSystemObject").OpenTextFile("file.bat",2,true)
-objFileToWrite.WriteLine("powercfg devicedisablewake " &chr(34)& device &chr(34))
-objFileToWrite.Close
-Set objFileToWrite = Nothing
-
-'---------------------------------------
-'Elevate this script before invoking it.
-'25.2.2011 FNL
-'---------------------------------------
-
 Set oWshShell = CreateObject("WScript.Shell")
 Set otexe = oWshShell.Exec("cmd.exe /c powercfg devicedisablewake " &chr(34) & device &chr(34))
 
 test=Split(otexe.StdOut.ReadAll, vbcrlf)
 msgbox Join(test, vbcrlf),0,"WindowName"
+
+Set otexe = oWshShell.Exec("cmd.exe /c del C:\users\public\desktop\temp.txt")
 
 '-----------------------------------------
 'Run this script under elevated privileges
