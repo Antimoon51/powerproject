@@ -12,17 +12,26 @@ Do While oExec.Status = 0
 Loop
 
 DeviceArray = Split(oExec.StdOut.ReadAll, vbCrLf)
-i = 0
-while i < 6
-    DeviceArray(i) = "["&i+1&"]" & DeviceArray(i)
-    i = i+1
-wend
-msgbox Join(DeviceArray, vbcrlf)
 
-With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\file.txt", True)
+With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\file.txt", True)        'creates text file on Desktop, imports DeviceArray in file
     .Write Join(DeviceArray, vbCrLf)
     .Close
 End With
+
+
+Set fso = CreateObject("Scripting.FileSystemObject")        'funktions checks, how many lines ther are in the file created before
+Set theFile = fso.OpenTextFile("C:\Users\Public\Desktop\file.txt", 8, True) 
+i = theFile.Line 
+Set Fso = Nothing
+
+i = i-2     'i-2, because the funktion always has two more lines, than there are devices.
+
+l = 0
+while l < i         'Enumerate the Devices
+    DeviceArray(l) = "["&l+1&"] " & DeviceArray(l)
+    l = l+1
+wend
+msgbox Join(DeviceArray, vbcrlf)
 
 device=inputbox (Join(DeviceArray, vbcrlf),"Disable")	'user asked for device to disable
 if IsEmpty(device) Then
