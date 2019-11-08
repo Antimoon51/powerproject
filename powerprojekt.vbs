@@ -12,7 +12,11 @@ Do While oExec.Status = 0
 Loop
 
 DeviceArray = Split(oExec.StdOut.ReadAll, vbCrLf)
-
+i = 0
+while i < 6
+    DeviceArray(i) = "["&i+1&"]" & DeviceArray(i)
+    i = i+1
+wend
 msgbox Join(DeviceArray, vbcrlf)
 
 With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\file.txt", True)
