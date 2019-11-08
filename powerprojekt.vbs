@@ -41,7 +41,6 @@ if IsEmpty(device) Then
 End If
 
 answer = msgbox("Disable this device:" &vbcrlf& device,1,"WindowName")
-answer = 0
 if answer = 2 Then              'checks for cancel
     msgbox "The action has been canceld, the program is closing"
     Set oExec = oShell.Exec("CMD.EXE /C del C:\Users\Public\Desktop\file.txt")
