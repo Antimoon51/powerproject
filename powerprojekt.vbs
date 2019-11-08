@@ -21,6 +21,12 @@ With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users
 End With
 
 device=inputbox (Join(DeviceArray, vbcrlf),"Disable")	'user asked for device to disable
+if IsEmpty(device) Then
+    msgbox "The action has ben canceld, the program is closing"
+    Set oExec = oShell.Exec("CMD.EXE /C del C:\Users\Public\Desktop\file.txt")
+    Wscript.Quit
+End If
+
 msgbox "Disable this device:" &vbcrlf& device,1,"WindowName"
 
 Set oExec = oShell.Exec("cmd.exe /c powercfg devicedisablewake " &chr(34) & device &chr(34))
