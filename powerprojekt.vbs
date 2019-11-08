@@ -1,11 +1,13 @@
 bElevate = False
 if WScript.Arguments.Count > 0 Then If WScript.Arguments(WScript.Arguments.Count-1) <> "|" then bElevate = True
-if bElevate Or WScript.Arguments.Count = 0 Then ElevateUAC
+if bElevate Or WScript.Arguments.Count = 0 Then ElevateUAC 'Checks, if elevated, if not runs subroutine to elevate
+
 msgbox "This programm shows you the devices, enabled to wake your PC up." & vbcrlf & "Please be aware, that this is not developed by professionals, but in my free time.", 0, "WindowName"
 msgbox "Disclaimer:" &vbcrlf& "I do not take responsibility for any computers being harmed!" &vbcrlf& "Use of program on own risk.", 0, "WindowName"
+msgbox "During the execution of the programm you will be asked, wich device you'd like to disable. You must give the exact name of the device. There will be a file named file.txt on your desktop, where you can copy the exact names from. This file will delete itselfe after the Programm finished."
 
 Set oShell = CreateObject ("WScript.Shell")
-Set oExec = oShell.Exec("CMD.EXE /C powercfg devicequery wake_armed")
+Set oExec = oShell.Exec("CMD.EXE /C powercfg devicequery wake_armed")	'Asks for devices enabeld to wake, written in 'Devicearray'
 Do While oExec.Status = 0
   WScript.Sleep 100
 Loop
@@ -14,25 +16,22 @@ DeviceArray = Split(oExec.StdOut.ReadAll, vbCrLf)
 
 msgbox Join(DeviceArray, vbcrlf)
 
-With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\users\public\desktop\temp.txt", True)
-  .Write Join(DeviceArray, vbCrLf)
-  .Close
+With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\file.txt", True)
+    .Write Join(DeviceArray, vbCrLf)
+    .Close
 End With
 
-device=inputbox (Join(DeviceArray, vbcrlf),"Disable")
+device=inputbox (Join(DeviceArray, vbcrlf),"Disable")	'user asked for device to disable
 msgbox "Disable this device:" &vbcrlf& device,1,"WindowName"
 
-Set oWshShell = CreateObject("WScript.Shell")
-Set otexe = oWshShell.Exec("cmd.exe /c powercfg devicedisablewake " &chr(34) & device &chr(34))
+Set oExec = oShell.Exec("cmd.exe /c powercfg devicedisablewake " &chr(34) & device &chr(34))
 
-test=Split(otexe.StdOut.ReadAll, vbcrlf)
-msgbox Join(test, vbcrlf),0,"WindowName"
+msgbox "The device " &vbcrlf&device&vbcrlf&"has been disabled"
 
-Set otexe = oWshShell.Exec("cmd.exe /c del C:\users\public\desktop\temp.txt")
-
+Set oExec = oShell.Exec("CMD.EXE /C del C:\Users\Public\Desktop\file.txt")
 
 '-----------------------------------------
-'Run this script under elevated privileges
+'This is the subroutine to elevate script
 '-----------------------------------------
 Sub ElevateUAC
     sParms = " |"
