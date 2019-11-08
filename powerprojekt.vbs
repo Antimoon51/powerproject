@@ -27,11 +27,15 @@ if IsEmpty(device) Then
     Wscript.Quit
 End If
 
-msgbox "Disable this device:" &vbcrlf& device,1,"WindowName"
-
-Set oExec = oShell.Exec("cmd.exe /c powercfg devicedisablewake " &chr(34) & device &chr(34))
-
-msgbox "The device " &vbcrlf&device&vbcrlf&"has been disabled"
+answer = msgbox("Disable this device:" &vbcrlf& device,1,"WindowName")
+if answer = 2 Then
+    msgbox "The action has been canceld, the program is closing"
+    Set oExec = oShell.Exec("CMD.EXE /C del C:\Users\Public\Desktop\file.txt")
+    Wscript.Quit
+elseif answer = 1 Then
+    Set oExec = oShell.Exec("cmd.exe /c powercfg devicedisablewake " &chr(34) & device &chr(34))
+    msgbox "The device " &vbcrlf&device&vbcrlf&"has been disabled"
+End If
 
 Set oExec = oShell.Exec("CMD.EXE /C del C:\Users\Public\Desktop\file.txt")
 
