@@ -41,7 +41,7 @@ if IsEmpty(device) Then
 End If
 
 answer = msgbox("Disable this device:" &vbcrlf& device,1,"WindowName")
-
+answer = 0
 if answer = 2 Then              'checks for cancel
     msgbox "The action has been canceld, the program is closing"
     Set oExec = oShell.Exec("CMD.EXE /C del C:\Users\Public\Desktop\file.txt")
@@ -49,7 +49,16 @@ if answer = 2 Then              'checks for cancel
 elseif answer = 1 Then
     Set oExec = oShell.Exec("cmd.exe /c powercfg devicedisablewake " &chr(34) & device &chr(34))
     msgbox "The device " &vbcrlf&device&vbcrlf&"has been disabled"
-End If
+else
+    dateandtime = now()
+    msgbox "Error: wrong return code of msgbox (001)"&vbcrlf&"For more information check the log file"
+    With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\log.txt", True)        'creates text file on Desktop, imports DeviceArray in file
+        .Write "["& dateandtime &"] "&"The return code of the message box was not recognised by the programm."
+        .Close
+    End With
+    Wscript.Quit
+end if
+
 
 Set oExec = oShell.Exec("CMD.EXE /C del C:\Users\Public\Desktop\file.txt")
 
