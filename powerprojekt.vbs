@@ -20,11 +20,11 @@ End With
 
 
 Set fso = CreateObject("Scripting.FileSystemObject")        'funktions checks, how many lines ther are in the file created before
-Set theFile = fso.OpenTextFile("C:\Users\Public\Desktop\file.txt", 8, True) 
-i = theFile.Line 
+Set theFile = fso.OpenTextFile("C:\Users\Public\Desktop\file.txt", 8, False) 
+i = theFile.Line
 Set Fso = Nothing
 
-i = i-2     'i-2, because the funktion always has two more lines, than there are devices.
+i = i-2     'i-2, because the file always has two more lines, than there are devices.
 
 l = 0
 while l < i         'Enumerate the Devices
