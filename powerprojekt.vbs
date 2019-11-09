@@ -13,12 +13,25 @@ Loop
 
 DeviceArray = Split(oExec.StdOut.ReadAll, vbCrLf)
 
-msgbox Join(DeviceArray, vbcrlf)
-
-With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\file.txt", True)
+With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\file.txt", True)        'creates text file on Desktop, imports DeviceArray in file
     .Write Join(DeviceArray, vbCrLf)
     .Close
 End With
+
+
+Set fso = CreateObject("Scripting.FileSystemObject")        'funktions checks, how many lines ther are in the file created before
+Set theFile = fso.OpenTextFile("C:\Users\Public\Desktop\file.txt", 8, False) 
+i = theFile.Line
+Set Fso = Nothing
+
+i = i-2     'i-2, because the file always has two more lines, than there are devices.
+
+l = 0
+while l < i         'Enumerate the Devices
+    DeviceArray(l) = "["&l+1&"] " & DeviceArray(l)
+    l = l+1
+wend
+msgbox Join(DeviceArray, vbcrlf)
 
 device=inputbox (Join(DeviceArray, vbcrlf),"Disable")	'user asked for device to disable
 if IsEmpty(device) Then
@@ -28,14 +41,23 @@ if IsEmpty(device) Then
 End If
 
 answer = msgbox("Disable this device:" &vbcrlf& device,1,"WindowName")
-if answer = 2 Then
+if answer = 2 Then              'checks for cancel
     msgbox "The action has been canceld, the program is closing"
     Set oExec = oShell.Exec("CMD.EXE /C del C:\Users\Public\Desktop\file.txt")
     Wscript.Quit
 elseif answer = 1 Then
     Set oExec = oShell.Exec("cmd.exe /c powercfg devicedisablewake " &chr(34) & device &chr(34))
     msgbox "The device " &vbcrlf&device&vbcrlf&"has been disabled"
-End If
+else
+    dateandtime = now()
+    msgbox "Error: wrong return code of msgbox (001)"&vbcrlf&"For more information check the log file"
+    With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\log.txt", True)        'creates text file on Desktop, imports DeviceArray in file
+        .Write "["& dateandtime &"] "&"The return code of the message box was not recognised by the programm."
+        .Close
+    End With
+    Wscript.Quit
+end if
+
 
 Set oExec = oShell.Exec("CMD.EXE /C del C:\Users\Public\Desktop\file.txt")
 
