@@ -17,7 +17,7 @@ DeviceArray = Split(oExec.StdOut.ReadAll, vbCrLf)
 
 msgbox Join(DeviceArray, vbcrlf),0,"Enabled Devices"
 
-With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\file.txt", True)        'creates text file on Desktop, imports DeviceArray in file
+With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\file.txt", True)        'creates text file on public Desktop, imports DeviceArray in file
     .Write Join(DeviceArray, vbCrLf)
     .Close
 End With
@@ -55,8 +55,7 @@ elseif answer = 1 Then
 else
     dateandtime = now()
     msgbox "Error: wrong return code of msgbox (001)"&vbcrlf&"For more information check the log file"
-    With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\log.txt", True)        'creates text file on Desktop, imports DeviceArray in file
-        .Write "["& dateandtime &"] "&"The return code of the message box was not recognised by the programm."
+    With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\log.txt", True)        'creates error log file log.txt on public desktop
         .Close
     End With
     Wscript.Quit
