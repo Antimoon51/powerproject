@@ -2,9 +2,9 @@ bElevate = False
 if WScript.Arguments.Count > 0 Then If WScript.Arguments(WScript.Arguments.Count-1) <> "|" then bElevate = True
 if bElevate Or WScript.Arguments.Count = 0 Then ElevateUAC 'Checks, if elevated, if not runs subroutine to elevate
 
-msgbox("This programm shows you the devices, enabled to wake your PC up." & vbcrlf & "Please be aware, that this is not developed by professionals, but in my free time."&vbcrlf&vbcrlf&"Disclaimer:" &vbcrlf& "I do not take responsibility for any computers being harmed!" &vbcrlf& "Use of program on own risk.", 0, "PowerProjekt")
+msgbox "This programm shows you the devices, enabled to wake your PC up." & vbcrlf & "Please be aware, that this is not developed by professionals, but in my free time."&vbcrlf&vbcrlf&"Disclaimer:" &vbcrlf& "I do not take responsibility for any computers being harmed!" &vbcrlf& "Use of program on own risk.", 0, "PowerProjekt"
 
-msgbox("During the execution of the programm you will be asked, wich device you'd like to disable. You must give the exact name of the device. There will be a file named file.txt on your desktop, where you can copy the exact names from. This file will delete itselfe after the Programm finished."&vbcrlf&vbcrlf&"WARNING!!"&vbcrlf&"If there already is a file named file.txt on the desktop this will not work!",0,"PowerProjekt")
+msgbox "During the execution of the programm you will be asked, wich device you'd like to disable. You must give the exact name of the device. There will be a file named file.txt on your desktop, where you can copy the exact names from. This file will delete itselfe after the Programm finished."&vbcrlf&vbcrlf&"WARNING!!"&vbcrlf&"If there already is a file named file.txt on the desktop this will not work!",0,"PowerProjekt"
 
 
 Set oShell = CreateObject ("WScript.Shell")
@@ -56,6 +56,7 @@ else
     dateandtime = now()
     msgbox "Error: wrong return code of msgbox (001)"&vbcrlf&"For more information check the log file"
     With WScript.CreateObject("Scripting.FileSystemObject").CreateTextFile("C:\Users\Public\Desktop\log.txt", True)        'creates error log file log.txt on public desktop
+        .Write "["&dateandtime&"]"&"Errorlogtext"
         .Close
     End With
     Wscript.Quit
