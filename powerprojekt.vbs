@@ -39,14 +39,14 @@ msgbox Join(DeviceArray, vbcrlf)
 
 device=inputbox (Join(DeviceArray, vbcrlf),"Disable")	'user asked for device to disable
 if IsEmpty(device) Then
-    msgbox "The action has ben canceld, the program is closing"
+    msgbox "Task failed succesfully!"
     Set oExec = oShell.Exec("CMD.EXE /C del C:\Users\Public\Desktop\file.txt")
     Wscript.Quit
 End If
 
 answer = msgbox("Disable this device:" &vbcrlf& device,1,"WindowName")
 if answer = 2 Then              'checks for cancel
-    msgbox "The action has been canceld, the program is closing"
+    msgbox "Task failed succesfully!"
     Set oExec = oShell.Exec("CMD.EXE /C del C:\Users\Public\Desktop\file.txt")
     Wscript.Quit
 elseif answer = 1 Then
