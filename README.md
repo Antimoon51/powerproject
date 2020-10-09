@@ -9,4 +9,4 @@ Known issues: Only disables the first item in list.
 
 ## VBScrip
 
-The VBS file no longer has to be run as admin. While starting the programm the UAC PopUp asks for eluvated rights. If denied Programm closes. 
+The VBS file no longer has to be run as admin. While starting the programm the UAC PopUp asks for elevated rights. If denied Programm closes. 
